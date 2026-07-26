@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_form_view_inherit_kio_approval" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.kio.approval</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='show_produce_all']" position="after">
+                <field name="kio_show_factory_mo_buttons" invisible="1"/>
+            </xpath>
+            <xpath expr="//header/button[@name='button_mark_done'][@invisible='not move_raw_ids or not show_produce']" position="attributes">
+                <attribute name="invisible">not move_raw_ids or not show_produce or not kio_show_factory_mo_buttons</attribute>
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='button_mark_done'][@invisible='not move_raw_ids or not show_produce_all']" position="attributes">
+                <attribute name="invisible">not move_raw_ids or not show_produce_all or not kio_show_factory_mo_buttons</attribute>
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='button_mark_done'][@invisible='move_raw_ids or not show_produce']" position="attributes">
+                <attribute name="invisible">move_raw_ids or not show_produce or not kio_show_factory_mo_buttons</attribute>
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='button_mark_done'][@invisible='move_raw_ids or not show_produce_all']" position="attributes">
+                <attribute name="invisible">move_raw_ids or not show_produce_all or not kio_show_factory_mo_buttons</attribute>
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_confirm']" position="attributes">
+                <attribute name="invisible">state != 'request_approval_mo'</attribute>
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_ceo,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='button_plan']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='button_unplan']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_assign']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='do_unreserve']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='button_scrap']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,request_approval_mo,rejected,confirmed,done</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_toggle_is_locked']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_serial_mass_produce_wizard']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_cancel']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='button_unbuild']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_open_label_type']" position="attributes">
+                <attribute name="groups">kio_purchase_management.group_kio_purchase_head_of_factory,kio_purchase_management.group_kio_purchase_admin</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='button_mark_done'][1]" position="before">
+                <button name="action_request_approval_mo"
+                        string="Request for Approval MO"
+                        type="object"
+                        class="btn-secondary"
+                        groups="kio_purchase_management.group_kio_purchase_manager,kio_purchase_management.group_kio_purchase_admin"
+                        invisible="state != 'draft'"/>
+                <button name="action_reject_approval_mo"
+                        string="Reject"
+                        type="object"
+                        class="btn-secondary"
+                        groups="kio_purchase_management.group_kio_purchase_ceo,kio_purchase_management.group_kio_purchase_admin"
+                        invisible="state != 'request_approval_mo'"/>
+            </xpath>
+            <xpath expr="//header/button[@name='action_open_label_type']" position="after">
+                <button name="action_print_product_serial_number_labels"
+                        string="Print Serial Number Labels"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="not has_product_serial_numbers"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Product Serial Number" name="kio_product_serial_number" invisible="state != 'done'">
+                    <field name="has_product_serial_numbers" invisible="1"/>
+                    <button name="action_generate_product_serial_numbers"
+                            string="Generate Product serial number"
+                            type="object"
+                            class="btn-primary"
+                            invisible="has_product_serial_numbers"/>
+                    <button name="action_print_product_serial_number_labels"
+                            string="Print Serial Number Labels"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="not has_product_serial_numbers"/>
+                    <field name="product_serial_number_ids" nolabel="1">
+                        <tree create="0" edit="0" delete="0">
+                            <field name="sequence_number"/>
+                            <field name="serial_number"/>
+                            <field name="product_id"/>
+                            <field name="company_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_production_tree_view_inherit_kio_finished_good" model="ir.ui.view">
+        <field name="name">mrp.production.tree.inherit.kio.finished.good</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='product_id']" position="after">
+                <field name="product_barcode" optional="show"/>
+                <field name="finished_good_product_status"
+                       string="Product Status"
+                       widget="badge"
+                       decoration-danger="finished_good_product_status == 'unverified'"
+                       decoration-success="finished_good_product_status == 'verified'"
+                       optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_inherit_kio_serial_numbers" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.kio.serial.numbers</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_open_label_layout']" position="after">
+                <button name="action_print_product_serial_number_labels"
+                        string="Print Serial Number Labels"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="not has_product_serial_numbers"/>
+                <button name="action_generate_product_serial_numbers_from_on_hand"
+                        string="Generate Serial Numbers from On Hand"
+                        type="object"
+                        class="btn-secondary"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <field name="has_product_serial_numbers" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='variants']" position="after">
+                <page name="kio_product_serial_number_barcode" string="Product Serial Number Barcode">
+                    <field name="kio_product_serial_number_ids" nolabel="1">
+                        <tree create="0" edit="0" delete="0" default_order="product_default_code, sequence_number">
+                            <field name="serial_number" string="Product Serial Number"/>
+                            <field name="product_default_code"/>
+                            <field name="product_id"/>
+                            <field name="product_variant_values"/>
+                            <field name="product_on_hand_qty" string="Quantity"/>
+                            <field name="source"/>
+                            <field name="production_id" string="MO Reference"/>
+                            <field name="verification_status"
+                                   string="Verified"
+                                   widget="badge"
+                                   decoration-danger="verification_status == 'unverified'"
+                                   decoration-success="verification_status == 'verified'"/>
+                            <field name="sold_status"
+                                   string="Sold Status"
+                                   widget="badge"
+                                   decoration-success="sold_status == 'available'"
+                                   decoration-warning="sold_status == 'not_available'"
+                                   decoration-danger="sold_status == 'sold'"/>
+                            <field name="verification_date"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_unverified_finished_good_products" model="ir.actions.act_window">
+        <field name="name">Unverified Products</field>
+        <field name="res_model">mrp.production</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'done'), ('finished_good_product_status', '=', 'unverified')]</field>
+        <field name="context">{'default_company_id': allowed_company_ids[0]}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No unverified finished goods found.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_finished_good_verification_form" model="ir.ui.view">
+        <field name="name">kio.finished.good.verification.form</field>
+        <field name="model">kio.finished.good.verification</field>
+        <field name="arch" type="xml">
+            <form string="Verified Products" create="0" delete="0" class="kio_finished_good_verification_form" js_class="kio_finished_good_verification_barcode_form">
+                <sheet class="o_form_sheet_full">
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="selected_production_id"
+                               placeholder="Select unverified manufacturing order"
+                               options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <separator string="Barcode Scan"/>
+                    <group>
+                        <group>
+                            <field name="barcode_scan"
+                                   string="Product Serial Number"
+                                   placeholder="Scan or enter product serial number"/>
+                        </group>
+                        <group>
+                            <button name="action_scan_barcode"
+                                    string="Verify"
+                                    type="object"
+                                    class="btn-primary"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Product List" name="product_list">
+                            <field name="selected_serial_number_ids" nolabel="1" readonly="1">
+                                <tree create="0" delete="0" edit="0">
+                                    <field name="scan_date"/>
+                                    <field name="production_id" string="Reference"/>
+                                    <field name="date_start" string="Start" widget="remaining_days"/>
+                                    <field name="product_id"/>
+                                    <field name="serial_number" string="Product Serial Number"/>
+                                    <field name="verification_status"
+                                           string="Product Status"
+                                           widget="badge"
+                                           decoration-danger="verification_status == 'unverified'"
+                                           decoration-success="verification_status == 'verified'"/>
+                                    <field name="origin"/>
+                                    <field name="components_availability"/>
+                                    <field name="product_qty" string="Quantity"/>
+                                    <field name="company_id"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'done'"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="History of Scanned Verified Products" name="history_scanned_verified_products">
+                            <field name="scanned_line_ids" nolabel="1">
+                                <tree create="0" delete="0" edit="0">
+                                    <field name="scan_date"/>
+                                    <field name="production_id" string="Reference"/>
+                                    <field name="date_start" string="Start" widget="remaining_days"/>
+                                    <field name="product_id"/>
+                                    <field name="product_serial_number"/>
+                                    <field name="finished_good_product_status"
+                                           string="Product Status"
+                                           widget="badge"
+                                           decoration-danger="finished_good_product_status == 'unverified'"
+                                           decoration-success="finished_good_product_status == 'verified'"/>
+                                    <field name="origin"/>
+                                    <field name="components_availability"/>
+                                    <field name="product_qty" string="Quantity"/>
+                                    <field name="company_id"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'done'"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="finished_good_verification_workspace" model="kio.finished.good.verification">
+        <field name="name">Finished Good Verification</field>
+    </record>
+
+    <record id="action_verified_finished_good_products" model="ir.actions.act_window">
+        <field name="name">Verified Products</field>
+        <field name="res_model">kio.finished.good.verification</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_finished_good_verification_form"/>
+        <field name="res_id" ref="finished_good_verification_workspace"/>
+        <field name="target">current</field>
+    </record>
+
+    <record id="action_open_finished_good_verification_workspace" model="ir.actions.server">
+        <field name="name">Verified Products</field>
+        <field name="model_id" ref="model_kio_finished_good_verification"/>
+        <field name="state">code</field>
+        <field name="code">
+workspace = env.ref('kio_manufacturing_management.finished_good_verification_workspace')
+action = workspace.action_open_workspace()
+        </field>
+    </record>
+
+    <menuitem id="menu_finished_good_inventory"
+              name="Finished Good Inventory"
+              parent="mrp.menu_mrp_root"
+              sequence="110"/>
+
+    <menuitem id="menu_unverified_finished_good_products"
+              name="Unverified Products"
+              parent="menu_finished_good_inventory"
+              action="action_unverified_finished_good_products"
+              sequence="10"/>
+
+    <menuitem id="menu_verified_finished_good_products"
+              name="Verified Products"
+              parent="menu_finished_good_inventory"
+              action="action_open_finished_good_verification_workspace"
+              sequence="20"/>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kio_finished_good_verification_user,kio.finished.good.verification.user,model_kio_finished_good_verification,mrp.group_mrp_user,1,1,1,0
+access_kio_finished_good_verification_line_user,kio.finished.good.verification.line.user,model_kio_finished_good_verification_line,mrp.group_mrp_user,1,1,1,0
+access_kio_mrp_product_serial_number_user,kio.mrp.product.serial.number.user,model_kio_mrp_product_serial_number,mrp.group_mrp_user,1,1,1,1

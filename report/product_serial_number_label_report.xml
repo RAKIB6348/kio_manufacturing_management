@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_product_serial_number_labels" model="ir.actions.report">
+        <field name="name">Product Serial Number Labels</field>
+        <field name="model">kio.mrp.product.serial.number</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">kio_manufacturing_management.report_product_serial_number_labels</field>
+        <field name="report_file">kio_manufacturing_management.report_product_serial_number_labels</field>
+        <field name="paperformat_id" ref="product.paperformat_label_sheet"/>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Product Serial Number Labels'</field>
+    </record>
+
+    <template id="report_product_serial_number_labels">
+        <t t-call="web.html_container">
+            <style>
+                .kio_serial_label_sheet {
+                    padding: 7.3mm 6mm;
+                    font-size: 8pt;
+                    page-break-after: always;
+                }
+                .kio_serial_label_table {
+                    border-collapse: separate;
+                    border-spacing: 1.2mm 1mm;
+                    margin: 0;
+                }
+                .kio_serial_label_cell {
+                    padding: 0;
+                    vertical-align: top;
+                }
+                .kio_serial_label {
+                    width: 48.26mm;
+                    height: 30.48mm;
+                    padding: 1mm;
+                    border: 1px solid #555;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                }
+                .kio_serial_label_name {
+                    font-size: 6.8pt;
+                    font-weight: 700;
+                    line-height: 1.1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .kio_serial_label_meta {
+                    font-size: 6.2pt;
+                    line-height: 1.15;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .kio_serial_label_barcode {
+                    margin-top: 1.3mm;
+                    text-align: center;
+                }
+                .kio_serial_label_serial {
+                    margin-top: 0.5mm;
+                    font-size: 6.8pt;
+                    text-align: center;
+                    font-weight: 700;
+                }
+                .kio_serial_label_price {
+                    margin-top: 0.2mm;
+                    font-size: 6.4pt;
+                    line-height: 1.1;
+                    text-align: center;
+                    font-weight: 700;
+                }
+                .kio_serial_label_empty {
+                    visibility: hidden;
+                }
+            </style>
+            <t t-foreach="range((len(docs) + 35) // 36)" t-as="page">
+                <div t-att-class="'kio_serial_label_sheet' + (page + 1 == ((len(docs) + 35) // 36) and ' kio_serial_last_sheet' or '')">
+                    <table class="kio_serial_label_table table table-borderless">
+                        <tbody>
+                            <t t-foreach="range(9)" t-as="row">
+                                <tr>
+                                    <t t-foreach="range(4)" t-as="column">
+                                        <t t-set="serial_index" t-value="page * 36 + row * 4 + column"/>
+                                        <td class="kio_serial_label_cell">
+                                            <t t-if="serial_index &lt; len(docs)">
+                                                <t t-set="serial" t-value="docs[serial_index]"/>
+                                                <div class="kio_serial_label">
+                                                    <div class="kio_serial_label_name" t-out="serial.product_id.product_tmpl_id.name or serial.product_id.name"/>
+                                                    <div class="kio_serial_label_meta">
+                                                        <span>Company: </span><span t-out="serial.company_id.name"/>
+                                                    </div>
+                                                    <div class="kio_serial_label_barcode">
+                                                        <div t-out="serial.serial_number"
+                                                             t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:46mm;height:12mm'}"/>
+                                                    </div>
+                                                    <div class="kio_serial_label_serial" t-out="serial.serial_number"/>
+                                                    <div class="kio_serial_label_price">
+                                                        <span>Price: </span>
+                                                        <span t-out="serial.product_id.lst_price"
+                                                              t-options="{'widget': 'monetary', 'display_currency': serial.product_id.currency_id}"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="kio_serial_label kio_serial_label_empty"/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+            <style>
+                .kio_serial_last_sheet {
+                    page-break-after: auto;
+                }
+            </style>
+        </t>
+    </template>
+</odoo>
