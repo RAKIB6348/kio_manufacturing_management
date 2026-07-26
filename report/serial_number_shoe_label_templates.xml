@@ -7,27 +7,47 @@
                     margin: 0;
                     padding: 0;
                 }
-                .kio_shoe_label_page {
-                    width: 40mm;
-                    height: 35mm;
-                    box-sizing: border-box;
+                .shoe_page {
+                    width: 24cm;
+                    height: 21cm;
+                    margin: 0;
+                    padding: 0;
                     overflow: hidden;
                     page-break-after: always;
-                    page-break-inside: avoid;
-                    break-inside: avoid;
                     background: #fff;
                     color: #000;
                     font-family: Arial, sans-serif;
                 }
-                .kio_shoe_label {
-                    width: 40mm;
-                    height: 35mm;
+                .shoe_label_table {
+                    width: 24cm;
+                    height: 21cm;
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                    table-layout: fixed;
+                    margin: 0;
+                    padding: 0;
+                }
+                .shoe_label_cell {
+                    width: 4cm;
+                    height: 3.5cm;
+                    min-width: 4cm;
+                    max-width: 4cm;
+                    min-height: 3.5cm;
+                    max-height: 3.5cm;
+                    padding: 0;
+                    margin: 0;
+                    vertical-align: top;
                     box-sizing: border-box;
                     overflow: hidden;
+                }
+                .shoe_label {
+                    width: 4cm;
+                    height: 3.5cm;
                     border: 1px solid #000;
-                    padding: 0.8mm;
-                    page-break-inside: avoid;
-                    break-inside: avoid;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                    padding: 1mm;
+                    margin: 0;
                 }
                 .kio_shoe_info {
                     font-size: 5.4pt;
@@ -58,33 +78,53 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
-                .kio_shoe_last_page {
+                .shoe_last_page {
                     page-break-after: auto;
                 }
             </style>
-            <t t-foreach="docs" t-as="serial">
-                <div t-att-class="'kio_shoe_label_page' + (serial_last and ' kio_shoe_last_page' or '')">
-                    <div class="kio_shoe_label">
-                        <div class="kio_shoe_info">
-                            <div class="kio_shoe_info_line">
-                                <span class="kio_shoe_info_label">Name: </span><span t-out="serial._get_label_product_display_name()"/>
-                            </div>
-                            <div class="kio_shoe_info_line">
-                                <span class="kio_shoe_info_label">Size: </span><span t-out="serial._get_label_product_size()"/>
-                            </div>
-                            <div class="kio_shoe_info_line">
-                                <span class="kio_shoe_info_label">Code: </span><span t-out="serial._get_label_product_code()"/>
-                            </div>
-                            <div class="kio_shoe_info_line">
-                                <span class="kio_shoe_info_label">MRP: </span><span t-out="serial._get_label_product_mrp()"/>
-                            </div>
-                        </div>
-                        <div class="kio_shoe_barcode">
-                            <div t-out="serial._get_label_barcode_value()"
-                                 t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:38mm;height:11mm'}"/>
-                        </div>
-                        <div class="kio_shoe_serial" t-out="serial._get_label_barcode_value()"/>
-                    </div>
+            <t t-set="shoe_columns" t-value="6"/>
+            <t t-set="shoe_rows" t-value="6"/>
+            <t t-set="shoe_labels_per_page" t-value="shoe_columns * shoe_rows"/>
+            <t t-set="shoe_page_count" t-value="(len(docs) + shoe_labels_per_page - 1) // shoe_labels_per_page"/>
+            <t t-foreach="range(shoe_page_count)" t-as="page_index">
+                <div t-att-class="'page shoe_page' + (page_index + 1 == shoe_page_count and ' shoe_last_page' or '')">
+                    <table class="shoe_label_table">
+                        <tbody>
+                            <t t-foreach="range(shoe_rows)" t-as="row_index">
+                                <tr>
+                                    <t t-foreach="range(shoe_columns)" t-as="column_index">
+                                        <t t-set="serial_index" t-value="page_index * shoe_labels_per_page + row_index * shoe_columns + column_index"/>
+                                        <td class="shoe_label_cell">
+                                            <t t-if="serial_index &lt; len(docs)">
+                                                <t t-set="serial" t-value="docs[serial_index]"/>
+                                                <div class="shoe_label">
+                                                    <div class="kio_shoe_info">
+                                                        <div class="kio_shoe_info_line">
+                                                            <span class="kio_shoe_info_label">Name: </span><span t-out="serial._get_label_product_display_name()"/>
+                                                        </div>
+                                                        <div class="kio_shoe_info_line">
+                                                            <span class="kio_shoe_info_label">Size: </span><span t-out="serial._get_label_product_size()"/>
+                                                        </div>
+                                                        <div class="kio_shoe_info_line">
+                                                            <span class="kio_shoe_info_label">Code: </span><span t-out="serial._get_label_product_code()"/>
+                                                        </div>
+                                                        <div class="kio_shoe_info_line">
+                                                            <span class="kio_shoe_info_label">MRP: </span><span t-out="serial._get_label_product_mrp()"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="kio_shoe_barcode">
+                                                        <div t-out="serial._get_label_barcode_value()"
+                                                             t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:38mm;height:11mm'}"/>
+                                                    </div>
+                                                    <div class="kio_shoe_serial" t-out="serial._get_label_barcode_value()"/>
+                                                </div>
+                                            </t>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
                 </div>
             </t>
         </t>
