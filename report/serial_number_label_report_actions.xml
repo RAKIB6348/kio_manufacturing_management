@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_serial_box_label" model="ir.actions.report">
+        <field name="name">Serial Box Label</field>
+        <field name="model">kio.mrp.product.serial.number</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">kio_manufacturing_management.report_serial_box_label</field>
+        <field name="report_file">kio_manufacturing_management.report_serial_box_label</field>
+        <field name="paperformat_id" ref="kio_manufacturing_management.paperformat_serial_box_label_11x6_5"/>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Serial Box Labels'</field>
+    </record>
+
+    <record id="action_report_serial_shoe_label" model="ir.actions.report">
+        <field name="name">Serial Shoe Label</field>
+        <field name="model">kio.mrp.product.serial.number</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">kio_manufacturing_management.report_serial_shoe_label</field>
+        <field name="report_file">kio_manufacturing_management.report_serial_shoe_label</field>
+        <field name="paperformat_id" ref="kio_manufacturing_management.paperformat_serial_shoe_label_4x3_5"/>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Serial Shoe Labels'</field>
+    </record>
+</odoo>

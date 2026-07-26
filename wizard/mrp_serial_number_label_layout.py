@@ -30,10 +30,12 @@ class MrpSerialNumberLabelLayout(models.TransientModel):
     custom_quantity = fields.Integer(string='Custom Quantity', default=1)
     print_format = fields.Selection(
         [
-            ('4cm_3_5cm_mrp', '4 cm × 3.5 cm with MRP'),
+            ('default', 'Default Label'),
+            ('box_11x6_5', 'Box Label — 11 cm × 6.5 cm'),
+            ('shoe_4x3_5', 'Shoe Label — 4 cm × 3.5 cm'),
         ],
         string='Format',
-        default='4cm_3_5cm_mrp',
+        default='default',
         required=True,
     )
     extra_content = fields.Html(string='Extra Content')
@@ -149,8 +151,14 @@ class MrpSerialNumberLabelLayout(models.TransientModel):
     def action_confirm_print(self):
         self.ensure_one()
         serials = self._get_serial_numbers_to_print()
-        report_action = self.env.ref(
-            'kio_manufacturing_management.action_report_product_serial_number_labels'
-        ).report_action(serials)
+        report_xml_ids = {
+            'box_11x6_5': 'kio_manufacturing_management.action_report_serial_box_label',
+            'shoe_4x3_5': 'kio_manufacturing_management.action_report_serial_shoe_label',
+        }
+        report_xml_id = report_xml_ids.get(
+            self.print_format,
+            'kio_manufacturing_management.action_report_product_serial_number_labels',
+        )
+        report_action = self.env.ref(report_xml_id).report_action(serials)
         report_action.update({'close_on_report_download': True})
         return report_action

@@ -12,7 +12,7 @@
                         <group>
                             <field name="print_quantity"/>
                             <field name="custom_quantity" invisible="print_quantity != 'custom'"/>
-                            <field name="print_format"/>
+                            <field name="print_format" widget="radio"/>
                         </group>
                         <group>
                             <field name="extra_content" placeholder="Extra Content"/>

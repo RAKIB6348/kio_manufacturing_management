@@ -149,16 +149,30 @@ class KioMrpProductSerialNumber(models.Model):
             return ''
         return product.product_tmpl_id.name or product.name or ''
 
-    def _get_label_product_size(self):
+    def _get_label_product_display_name(self):
         self.ensure_one()
         product = self.product_id
         if not product:
             return ''
+        return product.with_context(display_default_code=False).display_name or product.display_name or ''
+
+    def _get_label_product_attribute(self, attribute_name):
+        self.ensure_one()
+        product = self.product_id
+        if not product:
+            return ''
+        attribute_name = (attribute_name or '').strip().lower()
         values = product.product_template_attribute_value_ids or product.product_template_variant_value_ids
         for value in values:
-            if (value.attribute_id.name or '').strip().lower() == 'size':
+            if (value.attribute_id.name or '').strip().lower() == attribute_name:
                 return value.name or ''
         return ''
+
+    def _get_label_product_size(self):
+        return self._get_label_product_attribute('Size')
+
+    def _get_label_product_color(self):
+        return self._get_label_product_attribute('Color')
 
     def _get_label_product_code(self):
         self.ensure_one()
@@ -172,3 +186,14 @@ class KioMrpProductSerialNumber(models.Model):
         currency = product.currency_id
         decimal_places = int(getattr(currency, 'decimal_places', 2) or 2) if currency else 2
         return f'{product.lst_price or 0.0:.{decimal_places}f}'
+
+    def _get_label_barcode_value(self):
+        self.ensure_one()
+        return self.serial_number or ''
+
+    def _get_label_product_image(self):
+        self.ensure_one()
+        product = self.product_id
+        if not product:
+            return False
+        return product.image_1920 or product.product_tmpl_id.image_1920 or False

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_serial_box_label">
+        <t t-call="web.html_container">
+            <style>
+                html, body {
+                    margin: 0;
+                    padding: 0;
+                }
+                .kio_box_label_page {
+                    width: 110mm;
+                    height: 65mm;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                    page-break-after: always;
+                    page-break-inside: avoid;
+                    break-inside: avoid;
+                    background: #fff;
+                    color: #000;
+                    font-family: Arial, sans-serif;
+                }
+                .kio_box_label {
+                    width: 110mm;
+                    height: 65mm;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                    border: 1px solid #000;
+                    padding: 2.2mm;
+                    position: relative;
+                    page-break-inside: avoid;
+                    break-inside: avoid;
+                }
+                .kio_box_info {
+                    position: absolute;
+                    left: 2.2mm;
+                    top: 2.2mm;
+                    font-size: 8.2pt;
+                    line-height: 1.18;
+                    width: 66mm;
+                }
+                .kio_box_info_line {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .kio_box_info_label {
+                    display: inline-block;
+                    width: 13mm;
+                    font-weight: 700;
+                }
+                .kio_box_barcode_title {
+                    position: absolute;
+                    left: 2.2mm;
+                    top: 22mm;
+                    font-size: 8pt;
+                    font-weight: 700;
+                }
+                .kio_box_barcode {
+                    position: absolute;
+                    left: 2.2mm;
+                    top: 26mm;
+                    width: 64mm;
+                    text-align: left;
+                }
+                .kio_box_serial {
+                    position: absolute;
+                    left: 2.2mm;
+                    top: 43mm;
+                    width: 64mm;
+                    font-size: 8.4pt;
+                    font-weight: 700;
+                    line-height: 1;
+                    text-align: center;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .kio_box_image_label {
+                    position: absolute;
+                    left: 70mm;
+                    top: 22mm;
+                    font-size: 8pt;
+                    font-weight: 700;
+                }
+                .kio_box_image_area {
+                    position: absolute;
+                    left: 70mm;
+                    right: 2.2mm;
+                    bottom: 2.2mm;
+                    height: 36mm;
+                    text-align: center;
+                    overflow: hidden;
+                }
+                .kio_box_image {
+                    max-width: 100%;
+                    max-height: 36mm;
+                    object-fit: contain;
+                }
+                .kio_box_last_page {
+                    page-break-after: auto;
+                }
+            </style>
+            <t t-foreach="docs" t-as="serial">
+                <t t-set="product_image" t-value="serial._get_label_product_image()"/>
+                <div t-att-class="'kio_box_label_page' + (serial_last and ' kio_box_last_page' or '')">
+                    <div class="kio_box_label">
+                        <div class="kio_box_info">
+                            <div class="kio_box_info_line">
+                                <span class="kio_box_info_label">Name</span><span>: </span><span t-out="serial._get_label_product_display_name()"/>
+                            </div>
+                            <div class="kio_box_info_line">
+                                <span class="kio_box_info_label">Color</span><span>: </span><span t-out="serial._get_label_product_color()"/>
+                            </div>
+                            <div class="kio_box_info_line">
+                                <span class="kio_box_info_label">Size</span><span>: </span><span t-out="serial._get_label_product_size()"/>
+                            </div>
+                            <div class="kio_box_info_line">
+                                <span class="kio_box_info_label">Code</span><span>: </span><span t-out="serial._get_label_product_code()"/>
+                            </div>
+                            <div class="kio_box_info_line">
+                                <span class="kio_box_info_label">MRP</span><span>: </span><span t-out="serial._get_label_product_mrp()"/>
+                            </div>
+                        </div>
+                        <div class="kio_box_barcode_title">BarCode:</div>
+                        <div class="kio_box_barcode">
+                            <div t-out="serial._get_label_barcode_value()"
+                                 t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:62mm;height:16mm'}"/>
+                        </div>
+                        <div class="kio_box_serial" t-out="serial._get_label_barcode_value()"/>
+                        <div class="kio_box_image_label">Shoe Pic:</div>
+                        <div class="kio_box_image_area">
+                            <img t-if="product_image"
+                                 t-att-src="image_data_uri(product_image)"
+                                 class="kio_box_image"
+                                 alt="Shoe Pic"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

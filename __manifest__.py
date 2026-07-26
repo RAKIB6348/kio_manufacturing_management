@@ -15,7 +15,11 @@ Adds manufacturing order approval workflow and role-based header actions.
     'data': [
         'security/ir.model.access.csv',
         'security/mrp_production_rules.xml',
+        'report/serial_number_label_paperformats.xml',
         'report/product_serial_number_label_report.xml',
+        'report/serial_number_label_report_actions.xml',
+        'report/serial_number_box_label_templates.xml',
+        'report/serial_number_shoe_label_templates.xml',
         'wizard/mrp_serial_number_label_layout_views.xml',
         'views/mrp_production_views.xml',
     ],
