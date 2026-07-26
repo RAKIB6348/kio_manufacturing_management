@@ -37,20 +37,20 @@
                     box-sizing: border-box;
                     overflow: hidden;
                 }
-                .kio_serial_label_name {
-                    font-size: 6.8pt;
-                    font-weight: 700;
-                    line-height: 1.1;
+                .kio_serial_label_info {
+                    font-size: 6.2pt;
+                    line-height: 1.05;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
-                .kio_serial_label_meta {
-                    font-size: 6.2pt;
-                    line-height: 1.15;
+                .kio_serial_label_info_line {
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                }
+                .kio_serial_label_info_label {
+                    font-weight: 700;
                 }
                 .kio_serial_label_barcode {
                     margin-top: 1.3mm;
@@ -59,13 +59,6 @@
                 .kio_serial_label_serial {
                     margin-top: 0.5mm;
                     font-size: 6.8pt;
-                    text-align: center;
-                    font-weight: 700;
-                }
-                .kio_serial_label_price {
-                    margin-top: 0.2mm;
-                    font-size: 6.4pt;
-                    line-height: 1.1;
                     text-align: center;
                     font-weight: 700;
                 }
@@ -85,20 +78,25 @@
                                             <t t-if="serial_index &lt; len(docs)">
                                                 <t t-set="serial" t-value="docs[serial_index]"/>
                                                 <div class="kio_serial_label">
-                                                    <div class="kio_serial_label_name" t-out="serial.product_id.product_tmpl_id.name or serial.product_id.name"/>
-                                                    <div class="kio_serial_label_meta">
-                                                        <span>Company: </span><span t-out="serial.company_id.name"/>
+                                                    <div class="kio_serial_label_info">
+                                                        <div class="kio_serial_label_info_line">
+                                                            <span class="kio_serial_label_info_label">Name: </span><span t-out="serial._get_label_product_name()"/>
+                                                        </div>
+                                                        <div class="kio_serial_label_info_line">
+                                                            <span class="kio_serial_label_info_label">Size: </span><span t-out="serial._get_label_product_size()"/>
+                                                        </div>
+                                                        <div class="kio_serial_label_info_line">
+                                                            <span class="kio_serial_label_info_label">Code: </span><span t-out="serial._get_label_product_code()"/>
+                                                        </div>
+                                                        <div class="kio_serial_label_info_line">
+                                                            <span class="kio_serial_label_info_label">MRP: </span><span t-out="serial._get_label_product_mrp()"/>
+                                                        </div>
                                                     </div>
                                                     <div class="kio_serial_label_barcode">
-                                                        <div t-out="serial.serial_number"
+                                                        <div t-out="serial.serial_number or ''"
                                                              t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:46mm;height:12mm'}"/>
                                                     </div>
-                                                    <div class="kio_serial_label_serial" t-out="serial.serial_number"/>
-                                                    <div class="kio_serial_label_price">
-                                                        <span>Price: </span>
-                                                        <span t-out="serial.product_id.lst_price"
-                                                              t-options="{'widget': 'monetary', 'display_currency': serial.product_id.currency_id}"/>
-                                                    </div>
+                                                    <div class="kio_serial_label_serial" t-out="serial.serial_number or ''"/>
                                                 </div>
                                             </t>
                                             <t t-else="">

@@ -141,3 +141,34 @@ class KioMrpProductSerialNumber(models.Model):
     def _compute_product_on_hand_qty(self):
         for serial in self:
             serial.product_on_hand_qty = 1.0 if serial.is_verified else 0.0
+
+    def _get_label_product_name(self):
+        self.ensure_one()
+        product = self.product_id
+        if not product:
+            return ''
+        return product.product_tmpl_id.name or product.name or ''
+
+    def _get_label_product_size(self):
+        self.ensure_one()
+        product = self.product_id
+        if not product:
+            return ''
+        values = product.product_template_attribute_value_ids or product.product_template_variant_value_ids
+        for value in values:
+            if (value.attribute_id.name or '').strip().lower() == 'size':
+                return value.name or ''
+        return ''
+
+    def _get_label_product_code(self):
+        self.ensure_one()
+        return self.product_id.default_code or ''
+
+    def _get_label_product_mrp(self):
+        self.ensure_one()
+        product = self.product_id
+        if not product:
+            return ''
+        currency = product.currency_id
+        decimal_places = int(getattr(currency, 'decimal_places', 2) or 2) if currency else 2
+        return f'{product.lst_price or 0.0:.{decimal_places}f}'
