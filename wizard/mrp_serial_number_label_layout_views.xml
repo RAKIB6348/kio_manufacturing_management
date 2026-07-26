@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mrp_serial_number_label_layout_form" model="ir.ui.view">
+        <field name="name">mrp.serial.number.label.layout.form</field>
+        <field name="model">mrp.serial.number.label.layout</field>
+        <field name="arch" type="xml">
+            <form string="Choose Serial Number Labels Layout">
+                <sheet>
+                    <field name="production_id" invisible="1"/>
+                    <field name="product_tmpl_id" invisible="1"/>
+                    <group col="2">
+                        <group>
+                            <field name="print_quantity"/>
+                            <field name="custom_quantity" invisible="print_quantity != 'custom'"/>
+                            <field name="print_format"/>
+                        </group>
+                        <group>
+                            <field name="extra_content" placeholder="Extra Content"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_print"
+                            string="Confirm"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Discard"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

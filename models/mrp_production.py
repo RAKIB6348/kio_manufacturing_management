@@ -182,11 +182,19 @@ class MrpProduction(models.Model):
 
     def action_print_product_serial_number_labels(self):
         self.ensure_one()
-        if not self.product_serial_number_ids:
-            raise UserError(_('Please generate product serial numbers before printing labels.'))
-        return self.env.ref(
-            'kio_manufacturing_management.action_report_product_serial_number_labels'
-        ).report_action(self.product_serial_number_ids)
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Choose Serial Number Labels Layout'),
+            'res_model': 'mrp.serial.number.label.layout',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_production_id': self.id,
+                'active_model': 'mrp.production',
+                'active_id': self.id,
+                'active_ids': self.ids,
+            },
+        }
 
     def _get_product_serial_number_prefix(self):
         self.ensure_one()

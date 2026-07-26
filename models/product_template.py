@@ -22,12 +22,19 @@ class ProductTemplate(models.Model):
 
     def action_print_product_serial_number_labels(self):
         self.ensure_one()
-        serials = self.kio_product_serial_number_ids
-        if not serials:
-            raise UserError(_('Please generate product serial numbers before printing labels.'))
-        return self.env.ref(
-            'kio_manufacturing_management.action_report_product_serial_number_labels'
-        ).report_action(serials)
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Choose Serial Number Labels Layout'),
+            'res_model': 'mrp.serial.number.label.layout',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_product_tmpl_id': self.id,
+                'active_model': 'product.template',
+                'active_id': self.id,
+                'active_ids': self.ids,
+            },
+        }
 
     def action_generate_product_serial_numbers_from_on_hand(self):
         SerialNumber = self.env['kio.mrp.product.serial.number']
