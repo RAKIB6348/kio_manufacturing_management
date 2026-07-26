@@ -43,51 +43,65 @@
                 .box_label {
                     width: 11cm;
                     height: 6.5cm;
+                    background: #fff;
                     border: 1px solid #000;
                     box-sizing: border-box;
                     overflow: hidden;
-                    padding: 1.5mm;
+                    padding: 1.4mm;
                     margin: 0;
                     position: relative;
                 }
-                .kio_box_info {
+                .box_product_info {
                     position: absolute;
-                    left: 2.2mm;
-                    top: 2.2mm;
-                    font-size: 8.2pt;
-                    line-height: 1.18;
-                    width: 66mm;
+                    left: 1.8mm;
+                    top: 1.8mm;
+                    width: 102mm;
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                    table-layout: fixed;
+                    font-size: 8pt;
+                    line-height: 1.12;
                 }
-                .kio_box_info_line {
+                .box_product_info td {
+                    padding: 0;
+                    margin: 0;
+                    vertical-align: top;
+                }
+                .box_info_label {
+                    width: 14mm;
+                    font-weight: 700;
+                }
+                .box_info_colon {
+                    width: 3mm;
+                    text-align: center;
+                    font-weight: 700;
+                }
+                .box_info_value {
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
                 }
-                .kio_box_info_label {
-                    display: inline-block;
-                    width: 13mm;
-                    font-weight: 700;
-                }
                 .kio_box_barcode_title {
                     position: absolute;
-                    left: 2.2mm;
-                    top: 22mm;
+                    left: 1.8mm;
+                    top: 21.5mm;
+                    width: 17mm;
                     font-size: 8pt;
                     font-weight: 700;
                 }
                 .kio_box_barcode {
                     position: absolute;
-                    left: 2.2mm;
-                    top: 26mm;
-                    width: 64mm;
+                    left: 20mm;
+                    top: 20.5mm;
+                    width: 56mm;
                     text-align: left;
                 }
                 .kio_box_serial {
                     position: absolute;
-                    left: 2.2mm;
-                    top: 43mm;
-                    width: 64mm;
-                    font-size: 8.4pt;
+                    left: 20mm;
+                    top: 37.2mm;
+                    width: 56mm;
+                    font-size: 7.8pt;
                     font-weight: 700;
                     line-height: 1;
                     text-align: center;
@@ -97,23 +111,24 @@
                 }
                 .kio_box_image_label {
                     position: absolute;
-                    left: 70mm;
-                    top: 22mm;
+                    left: 1.8mm;
+                    top: 44.2mm;
+                    width: 17mm;
                     font-size: 8pt;
                     font-weight: 700;
                 }
                 .kio_box_image_area {
                     position: absolute;
-                    left: 70mm;
-                    right: 2.2mm;
-                    bottom: 2.2mm;
-                    height: 36mm;
+                    left: 20mm;
+                    right: 1.8mm;
+                    bottom: 1.8mm;
+                    height: 23mm;
                     text-align: center;
                     overflow: hidden;
                 }
                 .kio_box_image {
                     max-width: 100%;
-                    max-height: 36mm;
+                    max-height: 23mm;
                     object-fit: contain;
                 }
                 .box_last_page {
@@ -137,27 +152,39 @@
                                                 <t t-set="serial" t-value="docs[serial_index]"/>
                                                 <t t-set="product_image" t-value="serial._get_label_product_image()"/>
                                                 <div class="box_label">
-                                                    <div class="kio_box_info">
-                                                        <div class="kio_box_info_line">
-                                                            <span class="kio_box_info_label">Name</span><span>: </span><span t-out="serial._get_label_product_display_name()"/>
-                                                        </div>
-                                                        <div class="kio_box_info_line">
-                                                            <span class="kio_box_info_label">Color</span><span>: </span><span t-out="serial._get_label_product_color()"/>
-                                                        </div>
-                                                        <div class="kio_box_info_line">
-                                                            <span class="kio_box_info_label">Size</span><span>: </span><span t-out="serial._get_label_product_size()"/>
-                                                        </div>
-                                                        <div class="kio_box_info_line">
-                                                            <span class="kio_box_info_label">Code</span><span>: </span><span t-out="serial._get_label_product_code()"/>
-                                                        </div>
-                                                        <div class="kio_box_info_line">
-                                                            <span class="kio_box_info_label">MRP</span><span>: </span><span t-out="serial._get_label_product_mrp()"/>
-                                                        </div>
-                                                    </div>
+                                                    <table class="box_product_info">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="box_info_label">Name</td>
+                                                                <td class="box_info_colon">:</td>
+                                                                <td class="box_info_value"><span t-out="serial._get_label_product_display_name()"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="box_info_label">Color</td>
+                                                                <td class="box_info_colon">:</td>
+                                                                <td class="box_info_value"><span t-out="serial._get_label_product_color()"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="box_info_label">Size</td>
+                                                                <td class="box_info_colon">:</td>
+                                                                <td class="box_info_value"><span t-out="serial._get_label_product_size()"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="box_info_label">Code</td>
+                                                                <td class="box_info_colon">:</td>
+                                                                <td class="box_info_value"><span t-out="serial._get_label_product_code()"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="box_info_label">MRP</td>
+                                                                <td class="box_info_colon">:</td>
+                                                                <td class="box_info_value"><span t-out="serial._get_label_product_mrp()"/></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                     <div class="kio_box_barcode_title">BarCode:</div>
                                                     <div class="kio_box_barcode">
                                                         <div t-out="serial._get_label_barcode_value()"
-                                                             t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:62mm;height:16mm'}"/>
+                                                             t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:56mm;height:16mm'}"/>
                                                     </div>
                                                     <div class="kio_box_serial" t-out="serial._get_label_barcode_value()"/>
                                                     <div class="kio_box_image_label">Shoe Pic:</div>
