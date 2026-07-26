@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="paperformat_serial_box_label_11x6_5" model="report.paperformat">
-        <field name="name">Serial Box Label Sheet 448mm x 401mm</field>
+    <record id="paperformat_serial_box_label_16_custom" model="report.paperformat">
+        <field name="name">Serial Box Label 16 - 452x272 mm</field>
         <field name="default" eval="False"/>
         <field name="format">custom</field>
-        <field name="page_width">448</field>
-        <field name="page_height">401</field>
+        <field name="page_width">452</field>
+        <field name="page_height">272</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">0</field>
-        <field name="margin_bottom">0</field>
-        <field name="margin_left">0</field>
-        <field name="margin_right">0</field>
+        <field name="margin_top">3</field>
+        <field name="margin_bottom">3</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
         <field name="header_line" eval="False"/>
         <field name="header_spacing">0</field>
-        <field name="disable_shrinking" eval="True"/>
         <field name="dpi">96</field>
+        <field name="disable_shrinking" eval="True"/>
     </record>
 
     <record id="paperformat_serial_shoe_label_4x3_5" model="report.paperformat">
