@@ -184,7 +184,7 @@
                                                     <div class="kio_box_barcode_title">BarCode:</div>
                                                     <div class="kio_box_barcode">
                                                         <div t-out="serial._get_label_barcode_value()"
-                                                             t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:56mm;height:16mm'}"/>
+                                                             t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:86mm;height:16mm'}"/>
                                                     </div>
                                                     <div class="kio_box_serial" t-out="serial._get_label_barcode_value()"/>
                                                     <div class="kio_box_image_label">Shoe Pic:</div>
