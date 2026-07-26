@@ -92,11 +92,12 @@
                                                             <span class="kio_serial_label_info_label">MRP: </span><span t-out="serial._get_label_product_mrp()"/>
                                                         </div>
                                                     </div>
+                                                    <div class="kio_serial_label_serial" t-out="serial.serial_number or ''"/>
                                                     <div class="kio_serial_label_barcode">
                                                         <div t-out="serial.serial_number or ''"
                                                              t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'width:46mm;height:12mm'}"/>
                                                     </div>
-                                                    <div class="kio_serial_label_serial" t-out="serial.serial_number or ''"/>
+                                                    <!-- <div class="kio_serial_label_serial" t-out="serial.serial_number or ''"/> -->
                                                 </div>
                                             </t>
                                             <t t-else="">
