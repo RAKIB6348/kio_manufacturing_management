@@ -8,8 +8,8 @@
                     padding: 0;
                 }
                 .shoe_page {
-                    width: 24cm;
-                    height: 21cm;
+                    width: 25.05cm;
+                    height: 22.05cm;
                     margin: 0;
                     padding: 0;
                     overflow: hidden;
@@ -19,10 +19,10 @@
                     font-family: Arial, sans-serif;
                 }
                 .shoe_label_table {
-                    width: 24cm;
-                    height: 21cm;
-                    border-collapse: collapse;
-                    border-spacing: 0;
+                    width: 25.05cm;
+                    height: 22.05cm;
+                    border-collapse: separate;
+                    border-spacing: 1.5mm 1.5mm;
                     table-layout: fixed;
                     margin: 0;
                     padding: 0;
