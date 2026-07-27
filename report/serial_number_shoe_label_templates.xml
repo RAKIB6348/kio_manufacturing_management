@@ -80,8 +80,8 @@
         flex-direction: column;
     }
     .kio_shoe_info {
-        font-size: 6pt;        /* ✅ INCREASED from 5.2pt */
-        line-height: 1.1;      /* ✅ INCREASED from 1.05 */
+        font-size: 6pt;
+        line-height: 1.1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -90,34 +90,36 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-bottom: 0.3mm;  /* ✅ NEW - Line spacing */
+        margin-bottom: 0.3mm;
     }
     .kio_shoe_info_label {
         font-weight: 700;
     }
     .kio_shoe_barcode {
         width: 100%;
-        margin-top: 1.5mm;     /* ✅ INCREASED from 0.5mm */
+        margin-top: 1.5mm;
         padding: 0;
         box-sizing: border-box;
         text-align: center;
         background: #fff;
         overflow: visible;
-        flex-grow: 1;          /* Barcode নিচে push করবে */
+        flex-grow: 1;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
     }
     .kio_shoe_barcode img {
         display: block !important;
-        width: 38mm !important;
-        height: 12mm !important;
+        width: 37mm !important;        /* ✅ Adjusted for padding */
+        height: 13mm !important;        /* ✅ Slightly taller */
         max-width: none !important;
         margin: 0 auto !important;
-        image-rendering: crisp-edges;
+        image-rendering: crisp-edges !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
     .kio_shoe_serial {
-        margin-top: 0.5mm;     /* ✅ INCREASED from 0.2mm */
+        margin-top: 0.5mm;
         font-size: 5.5pt;
         line-height: 1;
         text-align: center;
@@ -125,6 +127,15 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    @media print {
+        .kio_shoe_barcode img {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            image-rendering: crisp-edges !important;
+            image-rendering: -webkit-optimize-contrast !important;
+        }
     }
 </style>
             <t t-set="shoe_columns" t-value="4"/>
@@ -161,7 +172,7 @@
                                                     <t t-if="barcode_value">
                                                         <div class="kio_shoe_barcode">
                                                             <div t-out="barcode_value"
-                                                                 t-options="{'widget': 'barcode', 'symbology': 'Code128', 'width': 780, 'height': 240, 'quiet': 1, 'img_style': 'display:block;width:39mm;height:12mm;margin:0 auto;'}"/>
+                                                                 t-options="{'widget': 'barcode', 'symbology': 'Code128', 'width': 1000, 'height': 300, 'quiet': 2, 'img_style': 'display:block;width:37mm;height:13mm;margin:0 auto;'}"/>
                                                         </div>
                                                         <div class="kio_shoe_serial" t-out="barcode_value"/>
                                                     </t>
