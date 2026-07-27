@@ -3,123 +3,130 @@
     <template id="report_serial_shoe_label">
         <t t-call="web.html_container">
             <style>
-                html,
-                body,
-                main,
-                article {
-                    margin: 0 !important;
-                    padding: 0 !important;
-                }
-                table,
-                tr,
-                td {
-                    page-break-inside: avoid !important;
-                    break-inside: avoid !important;
-                }
-                .shoe_page {
-                    width: 170mm;
-                    height: 224mm;
-                    margin: 0;
-                    padding: 0;
-                    overflow: hidden !important;
-                    page-break-inside: avoid !important;
-                    break-inside: avoid !important;
-                    page-break-after: auto !important;
-                    background: #fff;
-                    color: #000;
-                    font-family: Arial, sans-serif;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-                .shoe_page:not(.shoe_last_page) {
-                    page-break-after: always !important;
-                }
-                .shoe_last_page {
-                    page-break-after: auto !important;
-                }
-                .shoe_label_table {
-                    width: 170mm;
-                    height: 224mm;
-                    border-collapse: separate;
-                    border-spacing: 2mm 2mm;
-                    table-layout: fixed;
-                    margin: 0;
-                    padding: 0;
-                }
-                .shoe_label_table tr {
-                    height: 35mm;
-                    page-break-inside: avoid !important;
-                    break-inside: avoid !important;
-                }
-                .shoe_label_cell {
-                    width: 40mm;
-                    height: 35mm;
-                    min-width: 40mm;
-                    max-width: 40mm;
-                    min-height: 35mm;
-                    max-height: 35mm;
-                    padding: 0;
-                    margin: 0;
-                    vertical-align: top;
-                    box-sizing: border-box;
-                    overflow: hidden;
-                    page-break-inside: avoid !important;
-                    break-inside: avoid !important;
-                }
-                .shoe_label {
-                    width: 40mm;
-                    height: 35mm;
-                    border: 0.3mm solid #000;
-                    box-sizing: border-box;
-                    overflow: hidden;
-                    padding: 1mm;
-                    margin: 0;
-                    background: #fff;
-                }
-                .kio_shoe_info {
-                    font-size: 5.2pt;
-                    line-height: 1.05;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-                .kio_shoe_info_line {
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-                .kio_shoe_info_label {
-                    font-weight: 700;
-                }
-                .kio_shoe_barcode {
-                    width: 100%;
-                    margin-top: 0.5mm;
-                    padding: 0;
-                    box-sizing: border-box;
-                    text-align: center;
-                    background: #fff;
-                    overflow: visible;
-                }
-                .kio_shoe_barcode img {
-                    display: block !important;
-                    width: 39mm !important;
-                    height: 12mm !important;
-                    max-width: none !important;
-                    margin: 0 auto !important;
-                    image-rendering: crisp-edges;
-                }
-                .kio_shoe_serial {
-                    margin-top: 0.2mm;
-                    font-size: 5.5pt;
-                    line-height: 1;
-                    text-align: center;
-                    font-weight: 700;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-            </style>
+    html,
+    body,
+    main,
+    article {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    table,
+    tr,
+    td {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    .shoe_page {
+        width: 170mm;
+        height: 224mm;
+        margin: 0;
+        padding: 0;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-after: auto !important;
+        background: #fff;
+        color: #000;
+        font-family: Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .shoe_page:not(.shoe_last_page) {
+        page-break-after: always !important;
+    }
+    .shoe_last_page {
+        page-break-after: auto !important;
+    }
+    .shoe_label_table {
+        width: 170mm;
+        height: 224mm;
+        border-collapse: separate;
+        border-spacing: 2mm 2mm;
+        table-layout: fixed;
+        margin: 0;
+        padding: 0;
+    }
+    .shoe_label_table tr {
+        height: 35mm;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    .shoe_label_cell {
+        width: 40mm;
+        height: 35mm;
+        min-width: 40mm;
+        max-width: 40mm;
+        min-height: 35mm;
+        max-height: 35mm;
+        padding: 0;
+        margin: 0;
+        vertical-align: top;
+        box-sizing: border-box;
+        overflow: hidden;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    .shoe_label {
+        width: 40mm;
+        height: 35mm;
+        border: 0.3mm solid #000;
+        box-sizing: border-box;
+        overflow: hidden;
+        padding: 1mm;
+        margin: 0;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+    }
+    .kio_shoe_info {
+        font-size: 6pt;        /* ✅ INCREASED from 5.2pt */
+        line-height: 1.1;      /* ✅ INCREASED from 1.05 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .kio_shoe_info_line {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0.3mm;  /* ✅ NEW - Line spacing */
+    }
+    .kio_shoe_info_label {
+        font-weight: 700;
+    }
+    .kio_shoe_barcode {
+        width: 100%;
+        margin-top: 1.5mm;     /* ✅ INCREASED from 0.5mm */
+        padding: 0;
+        box-sizing: border-box;
+        text-align: center;
+        background: #fff;
+        overflow: visible;
+        flex-grow: 1;          /* Barcode নিচে push করবে */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    .kio_shoe_barcode img {
+        display: block !important;
+        width: 38mm !important;
+        height: 12mm !important;
+        max-width: none !important;
+        margin: 0 auto !important;
+        image-rendering: crisp-edges;
+    }
+    .kio_shoe_serial {
+        margin-top: 0.5mm;     /* ✅ INCREASED from 0.2mm */
+        font-size: 5.5pt;
+        line-height: 1;
+        text-align: center;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
             <t t-set="shoe_columns" t-value="4"/>
             <t t-set="shoe_rows" t-value="6"/>
             <t t-set="shoe_labels_per_page" t-value="shoe_columns * shoe_rows"/>
