@@ -73,7 +73,7 @@
                     border: 0.3mm solid #000;
                     box-sizing: border-box;
                     overflow: hidden;
-                    padding: 0.2mm;
+                    padding: 1mm;
                     margin: 0;
                     background: #fff;
                 }
