@@ -73,7 +73,7 @@
                     border: 0.3mm solid #000;
                     box-sizing: border-box;
                     overflow: hidden;
-                    padding: 0.6mm;
+                    padding: 0.2mm;
                     margin: 0;
                     background: #fff;
                 }
@@ -95,7 +95,7 @@
                 .kio_shoe_barcode {
                     width: 100%;
                     margin-top: 0.5mm;
-                    padding: 0 0.3mm;
+                    padding: 0;
                     box-sizing: border-box;
                     text-align: center;
                     background: #fff;
@@ -103,8 +103,8 @@
                 }
                 .kio_shoe_barcode img {
                     display: block !important;
-                    width: 37.5mm !important;
-                    height: 10mm !important;
+                    width: 39mm !important;
+                    height: 12mm !important;
                     max-width: none !important;
                     margin: 0 auto !important;
                     image-rendering: crisp-edges;
@@ -154,7 +154,7 @@
                                                     <t t-if="barcode_value">
                                                         <div class="kio_shoe_barcode">
                                                             <div t-out="barcode_value"
-                                                                 t-options="{'widget': 'barcode', 'symbology': 'Code128', 'img_style': 'display:block;width:40.5mm;height:10mm;margin:0 auto;'}"/>
+                                                                 t-options="{'widget': 'barcode', 'symbology': 'Code128', 'width': 780, 'height': 240, 'quiet': 1, 'img_style': 'display:block;width:39mm;height:12mm;margin:0 auto;'}"/>
                                                         </div>
                                                         <div class="kio_shoe_serial" t-out="barcode_value"/>
                                                     </t>
