@@ -189,7 +189,8 @@ class KioMrpProductSerialNumber(models.Model):
 
     def _get_label_barcode_value(self):
         self.ensure_one()
-        return self.serial_number or ''
+        value = getattr(self, 'barcode', False) or self.serial_number or ''
+        return str(value).replace('\r', '').replace('\n', '').replace('\t', '').strip()
 
     def _get_label_product_image(self):
         self.ensure_one()
